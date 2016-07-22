@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WFbind
 {
-    internal class LabelBinding<TView, TViewModel> : Binding<TView, Label, TViewModel>
+    internal class LabelBinding<TView, TViewModel> : BindingBuilder<TView, Label, TViewModel>
         where TViewModel : INotifyPropertyChanged
     {
         public LabelBinding(TView view, Label control, Expression<Func<Label, object>> viewProperty,

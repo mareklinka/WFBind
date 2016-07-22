@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -154,64 +152,31 @@ namespace WFbind.Tests
             // assert
             Assert.AreEqual(newText, vm.Text);
         }
-    }
 
-    public static class Extensions
-    {
-        internal static PropertyInfo GetPropertyInfo<TSource, TProperty>(
-            this TSource source,
-            Expression<Func<TSource, TProperty>> propertyLambda)
+        [TestMethod]
+        public void Unbind_Unhooks()
         {
-            var type = typeof(TSource);
+            const string Text = "test";
 
-            var member = propertyLambda.Body as MemberExpression;
-            if (member == null)
-                throw new ArgumentException(string.Format(
-                    "Expression '{0}' refers to a method, not a property.",
-                    propertyLambda.ToString()));
+            var vm1 = new TestingViewModel();
+            var form = new Form();
 
-            var propInfo = member.Member as PropertyInfo;
-            if (propInfo == null)
-                throw new ArgumentException(string.Format(
-                    "Expression '{0}' refers to a field, not a property.",
-                    propertyLambda.ToString()));
+            var label = new TextBox();
+            form.Controls.Add(label);
 
-            if (type != propInfo.ReflectedType &&
-                !type.IsSubclassOf(propInfo.ReflectedType))
-                throw new ArgumentException(string.Format(
-                    "Expresion '{0}' refers to a property that is not from type {1}.",
-                    propertyLambda.ToString(),
-                    type));
+            BindingManager.Bind(form).To(vm1);
 
-            return propInfo;
-        }
+            // act
+            BindingManager.For(form).Bind(label, _ => _.Text).To(vm1, _ => _.Text);
 
-        public static void FireEvent<TSource>(this TSource targetObject, string eventName, EventArgs e)
-        {
-            /*
-    * By convention event handlers are internally called by a protected
-    * method called OnEventName
-    * e.g.
-    *     public event TextChanged
-    * is triggered by
-    *     protected void OnTextChanged
-    * 
-    * If the object didn't create an OnXxxx protected method,
-    * then you're screwed. But your alternative was over override
-    * the method and call it - so you'd be screwed the other way too.
-    */
-            var methodName = "On" + eventName;
+            vm1.Text = Text;
+            Assert.AreEqual(Text, label.Text);
 
-            var mi = targetObject.GetType().GetMethod(
-                  methodName,
-                  BindingFlags.Instance | BindingFlags.NonPublic);
+            var vm2 = new TestingViewModel();
+            BindingManager.Bind(form).To(vm2);
 
-            if (mi == null)
-            {
-                throw new ArgumentException("Cannot find event thrower named " + methodName);
-            }
-
-            mi.Invoke(targetObject, new object[] { e });
+            vm2.Text = Text + "abc";
+            Assert.AreEqual(Text, label.Text);
         }
     }
 }

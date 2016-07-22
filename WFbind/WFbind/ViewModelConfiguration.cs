@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace WFbind
 {
@@ -13,6 +14,11 @@ namespace WFbind
 
         public void To<TViewModel>(TViewModel viewModel) where TViewModel : INotifyPropertyChanged
         {
+            if (viewModel == null)
+            {
+                throw new ArgumentNullException(nameof(viewModel));
+            }
+
             BindingManager.AddViewModel(_view, viewModel);
         }
     }

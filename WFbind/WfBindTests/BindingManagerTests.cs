@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace WFbind.Tests
@@ -55,6 +56,100 @@ namespace WFbind.Tests
 
             Assert.AreEqual(label1.Text, NewText);
             Assert.AreEqual(label2.Text, NewText);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Bind_NullView_Throws()
+        {
+            var form = new Form();
+
+            var label = new Label();
+            form.Controls.Add(label);
+
+            BindingManager.Bind<Form>(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Bind_NullViewModel_Throws()
+        {
+            var form = new Form();
+
+            var label = new Label();
+            form.Controls.Add(label);
+
+            BindingManager.Bind(form).To<TestingViewModel>(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void For_NullView_Throws()
+        {
+            var vm = new TestingViewModel();
+            var form = new Form();
+
+            var label = new Label();
+            form.Controls.Add(label);
+
+            BindingManager.Bind(form).To(vm);
+            BindingManager.For<Form>(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void For_NullViewProperty_Throws()
+        {
+            var vm = new TestingViewModel();
+            var form = new Form();
+
+            var label = new Label();
+            form.Controls.Add(label);
+
+            BindingManager.Bind(form).To(vm);
+            BindingManager.For(form).Bind(label, null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void For_NullControl_Throws()
+        {
+            var vm = new TestingViewModel();
+            var form = new Form();
+
+            var label = new Label();
+            form.Controls.Add(label);
+
+            BindingManager.Bind(form).To(vm);
+            BindingManager.For(form).Bind<Label>(null, _ => _.Text);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void For_NullViewModelProperty_Throws()
+        {
+            var vm = new TestingViewModel();
+            var form = new Form();
+
+            var label = new Label();
+            form.Controls.Add(label);
+
+            BindingManager.Bind(form).To(vm);
+            BindingManager.For(form).Bind(label, _ => _.Text).To(vm, null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void For_NullViewModel_Throws()
+        {
+            var vm = new TestingViewModel();
+            var form = new Form();
+
+            var label = new Label();
+            form.Controls.Add(label);
+
+            BindingManager.Bind(form).To(vm);
+            BindingManager.For(form).Bind(label, _ => _.Text).To<TestingViewModel>(null, _ => _.Text);
         }
     }
 }

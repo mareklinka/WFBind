@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WfBind", "WFbind\WfBind.csproj", "{B9A811A6-AEB6-4013-B6E1-F307AC99F4C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFBind.Demo", "WFBind.Demo\WFBind.Demo.csproj", "{717E362B-F5E8-4711-A2AA-C966E67C0029}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WfBindTests", "WfBindTests\WfBindTests.csproj", "{E920EA40-1FC7-4564-BC0D-F97DCE2FB844}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9A811A6-AEB6-4013-B6E1-F307AC99F4C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9A811A6-AEB6-4013-B6E1-F307AC99F4C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9A811A6-AEB6-4013-B6E1-F307AC99F4C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9A811A6-AEB6-4013-B6E1-F307AC99F4C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{717E362B-F5E8-4711-A2AA-C966E67C0029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{717E362B-F5E8-4711-A2AA-C966E67C0029}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{717E362B-F5E8-4711-A2AA-C966E67C0029}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{717E362B-F5E8-4711-A2AA-C966E67C0029}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E920EA40-1FC7-4564-BC0D-F97DCE2FB844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E920EA40-1FC7-4564-BC0D-F97DCE2FB844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E920EA40-1FC7-4564-BC0D-F97DCE2FB844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E920EA40-1FC7-4564-BC0D-F97DCE2FB844}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

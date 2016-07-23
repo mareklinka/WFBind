@@ -26,6 +26,9 @@ Done and/or prototyped:
     * RadioButton
 * Command bindings
     * Button
+    * ToolStripButton
+    * MenuItem
+    * ToolStripMenuItem
 
 Still to come:
 * Bindings to collection controls:
@@ -34,8 +37,7 @@ Still to come:
     * Listbox
     * DataGridView
 * Command bindings
-    * ToolStripButton
-    * MenuItem
+    * whatever else that comes to mind
 * Binding converters (one- and two-way)
 * Binding templating
 * Any other UI component binding I'll think of

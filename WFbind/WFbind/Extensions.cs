@@ -18,9 +18,26 @@ namespace WFbind
 
             var member = propertyLambda.Body as MemberExpression;
             if (member == null)
-                throw new ArgumentException(string.Format(
-                    "Expression '{0}' refers to a method, not a property.",
-                    propertyLambda.ToString()));
+            {
+                // this is required to handle value types, whose expressions will contain a cast
+                var unary = propertyLambda.Body as UnaryExpression;
+
+                if (unary == null || unary.NodeType != ExpressionType.Convert)
+                {
+                    throw new ArgumentException(string.Format(
+                        "Expression '{0}' refers to a method, not a property.",
+                        propertyLambda));
+                }
+
+                member = unary.Operand as MemberExpression;
+
+                if (member == null)
+                {
+                    throw new ArgumentException(string.Format(
+                        "Expression '{0}' refers to a method, not a property.",
+                        propertyLambda));
+                }
+            }
 
             var propInfo = member.Member as PropertyInfo;
             if (propInfo == null)

@@ -2,9 +2,10 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Windows.Forms;
+using WFbind;
 using WFBind.Exceptions;
 
-namespace WFbind
+namespace WFBind.Bindings
 {
     public class TextBoxBinding<TView, TViewModel> : TwoWayBinding<TView, TextBox, TViewModel>
         where TViewModel : INotifyPropertyChanged

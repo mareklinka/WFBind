@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace WFbind.Tests
+namespace WfBindTests
 {
     public class TestingViewModel : INotifyPropertyChanged
     {
         private string _text;
+        private bool _bool;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public string Text
@@ -18,6 +19,20 @@ namespace WFbind.Tests
             set
             {
                 _text = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool BoolValue
+        {
+            get
+            {
+                return _bool;
+            }
+
+            set
+            {
+                _bool = value;
                 OnPropertyChanged();
             }
         }

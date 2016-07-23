@@ -46,12 +46,17 @@
     <Compile Include="BindingBuilder.cs" />
     <Compile Include="BindingConfiguration.cs" />
     <Compile Include="BindingManager.cs" />
+    <Compile Include="Bindings\ButtonCommandBinding.cs" />
+    <Compile Include="Bindings\CheckBoxBinding.cs" />
+    <Compile Include="Bindings\CommandBinding.cs" />
+    <Compile Include="Bindings\RadioBinding.cs" />
     <Compile Include="Exceptions\InvalidBindingException.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Binding.cs" />
-    <Compile Include="SimpleBinding.cs" />
+    <Compile Include="Bindings\SimpleBinding.cs" />
+    <Compile Include="ICommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextBoxBinding.cs" />
+    <Compile Include="Bindings\TextBoxBinding.cs" />
     <Compile Include="TwoWayBinding.cs" />
     <Compile Include="ViewModelConfiguration.cs" />
   </ItemGroup>

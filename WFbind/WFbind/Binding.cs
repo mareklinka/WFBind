@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
+using WFBind;
 
 namespace WFbind
 {
@@ -45,17 +46,22 @@ namespace WFbind
         protected PropertyInfo ViewModelPropertyInfo { get; private set; }
         private TView _view;
 
-        protected Binding(TView view, TControl control, Expression<Func<TControl, object>> viewProperty, TViewModel viewModel, Expression<Func<TViewModel, object>> viewModelProperty)
+        protected Binding(TView view, TControl control, TViewModel viewModel)
         {
             _view = view;
+            Control = control;
+            ViewModel = viewModel;
+            Configuration = new BindingConfiguration();
+        }
+
+        protected Binding(TView view, TControl control, Expression<Func<TControl, object>> viewProperty, TViewModel viewModel, Expression<Func<TViewModel, object>> viewModelProperty) : this(view, control, viewModel)
+        {
             ViewModel = viewModel;
             ViewProperty = viewProperty;
             Control = control;
             ViewPropertyInfo = Control.GetPropertyInfo(ViewProperty);
             ViewModelProperty = viewModelProperty;
             ViewModelPropertyInfo = ViewModel.GetPropertyInfo(ViewModelProperty);
-
-            Configuration = new BindingConfiguration();
         }
 
         internal override bool HasViewModel(INotifyPropertyChanged viewModel)

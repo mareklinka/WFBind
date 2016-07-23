@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using WFbind;
@@ -30,13 +31,15 @@ namespace WFBind.Demo
                 .Bind(textBox3, _ => _.Text)
                 .To(_myViewModel, vm => vm.Text)
                 .Setup(configuration => configuration.IsTwoWay = false);
+            BindingManager.For(this).BindCommand(button2).To(_myViewModel, _ => _.Command);
 
             myControl1.Bind(_myViewModel);
         }
 
-        private void button1_Click(object sender, System.EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             _myViewModel.Text = "AHAHAHA";
+            _myViewModel.Command.CanExecuteProperty = !_myViewModel.Command.CanExecuteProperty;
         }
     }
 
@@ -44,6 +47,11 @@ namespace WFBind.Demo
     {
         private string _text = "Starting String";
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public MyViewModel()
+        {
+            Command = new MyCommand(this);
+        }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -61,6 +69,50 @@ namespace WFBind.Demo
             {
                 _text = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public MyCommand Command { get; }
+
+        public class MyCommand : ICommand
+        {
+            private readonly MyViewModel _vm;
+            private bool _canExecuteProperty;
+
+            public MyCommand(MyViewModel vm)
+            {
+                _vm = vm;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public bool CanExecuteProperty
+            {
+                get
+                {
+                    return _canExecuteProperty;
+                }
+
+                set
+                {
+                    _canExecuteProperty = value;
+                    OnCanExecuteChanged();
+                }
+            }
+
+            public bool CanExecute()
+            {
+                return _canExecuteProperty;
+            }
+
+            public void Execute()
+            {
+                _vm.Text = "AA";
+            }
+
+            protected virtual void OnCanExecuteChanged()
+            {
+                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
             }
         }
     }

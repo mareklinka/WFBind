@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using WFbind;
 
-namespace WFbind
+namespace WFBind.Bindings
 {
     internal class SimpleBinding<TView, TControl, TViewModel> : Binding<TView, TControl, TViewModel>
         where TViewModel : INotifyPropertyChanged

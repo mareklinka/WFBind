@@ -2,6 +2,8 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Windows.Forms;
+using WFBind;
+using WFBind.Bindings;
 
 namespace WFbind
 {
@@ -16,8 +18,27 @@ namespace WFbind
                     viewProperty as Expression<Func<TextBox, object>>, viewModel, viewModelProperty);
             }
 
+            if (typeof(TControl) == typeof(CheckBox) && control.GetPropertyInfo(viewProperty).Name == "Checked")
+            {
+                return new CheckBoxBinding<TView, TViewModel>(view, control as CheckBox, 
+                    viewProperty as Expression<Func<CheckBox, object>>, viewModel, viewModelProperty);
+            }
+
+            if (typeof(TControl) == typeof(RadioButton) && control.GetPropertyInfo(viewProperty).Name == "Checked")
+            {
+                return new RadioBinding<TView, TViewModel>(view, control as RadioButton,
+                    viewProperty as Expression<Func<RadioButton, object>>, viewModel, viewModelProperty);
+            }
+
             return new SimpleBinding<TView, TControl, TViewModel>(view, control,
                 viewProperty, viewModel, viewModelProperty);
+        }
+
+        public static Binding<TView> BuildCommand<TView, TControl, TViewModel>(TView view,
+            TControl control,  TViewModel viewModel, Expression<Func<TViewModel, ICommand>> viewModelProperty) where TViewModel : INotifyPropertyChanged
+        {
+            return new ButtonCommandBinding<TView, TViewModel>(view, control as Button,
+                viewModel, viewModelProperty);
         }
     }
 }

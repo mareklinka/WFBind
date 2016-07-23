@@ -1,13 +1,15 @@
 ﻿using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WFbind;
+using WFbind.Tests;
 
-namespace WFbind.Tests
+namespace WfBindTests.Bindings
 {
     [TestClass]
-    public class LabelBindingTests
+    public class SimpleBindingTests
     {
         [TestMethod]
-        public void LabelBindingTest_Form()
+        public void SimpleBindingTest_Form()
         {
             // arrange
             const string initialText = "Initial text";
@@ -33,7 +35,7 @@ namespace WFbind.Tests
         }
 
         [TestMethod]
-        public void LabelBindingTest_UserControl()
+        public void SimpleBindingTest_UserControl()
         {
             // arrange
             const string initialText = "Initial text";

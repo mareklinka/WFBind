@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WfBindTests;
 
 namespace WFbind.Tests
 {
@@ -58,7 +59,6 @@ namespace WFbind.Tests
             // assert
             Assert.AreEqual(newText, tb.Text);
         }
-
 
         [TestMethod]
         public void BindingToViewModel_WithoutTwoWay_NoChange()

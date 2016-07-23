@@ -1,10 +1,13 @@
 using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
 
 namespace WFbind
 {
+    [ExcludeFromCodeCoverage]
     public static class Extensions
     {
         internal static PropertyInfo GetPropertyInfo<TSource, TProperty>(
@@ -38,6 +41,31 @@ namespace WFbind
         public static ViewModelConfiguration<Form> Bind(this Form form)
         {
             return BindingManager.Bind(form);
+        }
+
+        public static ViewModelConfiguration<UserControl> Bind(this UserControl form)
+        {
+            return BindingManager.Bind(form);
+        }
+
+        public static INotifyPropertyChanged DataContext(this UserControl form)
+        {
+            return BindingManager.GetViewModelFor<INotifyPropertyChanged>(form);
+        }
+
+        public static INotifyPropertyChanged DataContext(this Form form)
+        {
+            return BindingManager.GetViewModelFor<INotifyPropertyChanged>(form);
+        }
+
+        public static TViewModel DataContext<TViewModel>(this UserControl form) where TViewModel : INotifyPropertyChanged
+        {
+            return BindingManager.GetViewModelFor<TViewModel>(form);
+        }
+
+        public static TViewModel DataContext<TViewModel>(this Form form) where TViewModel : INotifyPropertyChanged
+        {
+            return BindingManager.GetViewModelFor<TViewModel>(form);
         }
     }
 }

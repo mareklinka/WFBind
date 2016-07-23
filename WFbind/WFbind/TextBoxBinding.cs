@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Windows.Forms;
+using WFBind.Exceptions;
 
 namespace WFbind
 {
@@ -13,7 +14,12 @@ namespace WFbind
             Expression<Func<TViewModel, object>> viewModelProperty)
             : base(view, control, viewProperty, viewModel, viewModelProperty)
         {
-            HookEvents(Control);
+            if (ViewPropertyInfo.Name != "Text")
+            {
+                throw new InvalidBindingException("TextBoxBinding can only be used to bind to TextBox.Text");
+            }
+
+            HookEvents(control);
         }
 
         private void HookEvents(TextBox control)
@@ -26,16 +32,15 @@ namespace WFbind
         {
             if (Configuration.UpdateSourceTrigger == UpdateSourceType.LostFocus)
             {
-                UpdateSource();
+                UpdateViewModel();
             }
         }
 
-        protected override void UpdateSource()
+        internal override void UpdateViewModel()
         {
-            if (Configuration.IsTwoWay &&
-                Control.GetPropertyInfo(ViewProperty).Name == "Text")
+            if (Configuration.IsTwoWay)
             {
-                base.UpdateSource();
+                base.UpdateViewModel();
             }
         }
 
@@ -49,14 +54,14 @@ namespace WFbind
         {
             if (Configuration.UpdateSourceTrigger == UpdateSourceType.OnPropertyChanged)
             {
-                UpdateSource();
+                UpdateViewModel();
             }
         }
 
         internal override void Unbind()
         {
-            base.Unbind();
             UnhookEvents(Control);
+            base.Unbind();
         }
     }
 }

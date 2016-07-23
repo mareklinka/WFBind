@@ -7,7 +7,7 @@ namespace WFbind.Tests
     public class LabelBindingTests
     {
         [TestMethod]
-        public void LabelBindingTest()
+        public void LabelBindingTest_Form()
         {
             // arrange
             const string initialText = "Initial text";
@@ -23,6 +23,32 @@ namespace WFbind.Tests
 
             // act
             BindingManager.For(form).Bind(label, _ => _.Text).To(vm, _ => _.Text);
+
+            Assert.AreEqual(initialText, label.Text);
+
+            vm.Text = newText;
+
+            // assert
+            Assert.AreEqual(newText, label.Text);
+        }
+
+        [TestMethod]
+        public void LabelBindingTest_UserControl()
+        {
+            // arrange
+            const string initialText = "Initial text";
+            const string newText = "New text";
+
+            var vm = new TestingViewModel { Text = initialText };
+            var uc = new UserControl();
+
+            var label = new Label { Text = initialText };
+            uc.Controls.Add(label);
+
+            BindingManager.Bind(uc).To(vm);
+
+            // act
+            BindingManager.For(uc).Bind(label, _ => _.Text).To(vm, _ => _.Text);
 
             Assert.AreEqual(initialText, label.Text);
 

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace WFbind
 {
-    public abstract class TwoWayBinding<TView, TControl, TViewModel> : BindingBuilder<TView, TControl, TViewModel> where TViewModel : INotifyPropertyChanged
+    public abstract class TwoWayBinding<TView, TControl, TViewModel> : Binding<TView, TControl, TViewModel> where TViewModel : INotifyPropertyChanged
     {
         protected TwoWayBinding(TView view, TControl control, Expression<Func<TControl, object>> viewProperty,
             TViewModel viewModel,
@@ -13,16 +13,13 @@ namespace WFbind
         {
         }
 
-        protected override void UpdateSource()
+        internal override void UpdateViewModel()
         {
-            base.UpdateSource();
+            base.UpdateViewModel();
             var viewModel = BindingManager.GetViewModelFor<TViewModel>(View);
 
-            var viewModelProperty = viewModel.GetPropertyInfo(ViewModelProperty);
-            var viewProperty = Control.GetPropertyInfo(ViewProperty);
-
-            var valueToSet = viewProperty.GetValue(Control);
-            viewModelProperty.SetValue(viewModel, valueToSet);
+            var valueToSet = ViewPropertyInfo.GetValue(Control);
+            ViewModelPropertyInfo.SetValue(viewModel, valueToSet);
         }
     }
 }

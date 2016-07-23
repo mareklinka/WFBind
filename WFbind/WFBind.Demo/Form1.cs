@@ -11,9 +11,9 @@ namespace WFBind.Demo
 
         public Form1()
         {
+            _myViewModel = new MyViewModel();
             InitializeComponent();
 
-            _myViewModel = new MyViewModel();
             this.Bind().To(_myViewModel);
             BindingManager.For(this).Bind(label1, _ => _.Text).To(_myViewModel, vm => vm.Text);
             BindingManager.For(this)
@@ -30,6 +30,8 @@ namespace WFBind.Demo
                 .Bind(textBox3, _ => _.Text)
                 .To(_myViewModel, vm => vm.Text)
                 .Setup(configuration => configuration.IsTwoWay = false);
+
+            myControl1.Bind(_myViewModel);
         }
 
         private void button1_Click(object sender, System.EventArgs e)

@@ -8,7 +8,7 @@ namespace WFbind.Tests
     public class TextBoxBindingTests
     {
         [TestMethod]
-        public void BindingToView_BasicTest()
+        public void BindingToView_BasicTest_Form()
         {
             // arrange
             const string initialText = "Initial text";
@@ -32,6 +32,33 @@ namespace WFbind.Tests
             // assert
             Assert.AreEqual(newText, tb.Text);
         }
+
+        [TestMethod]
+        public void BindingToView_BasicTest_UserControl()
+        {
+            // arrange
+            const string initialText = "Initial text";
+            const string newText = "New text";
+
+            var vm = new TestingViewModel { Text = initialText };
+            var form = new UserControl();
+
+            var tb = new TextBox { Text = initialText };
+            form.Controls.Add(tb);
+
+            BindingManager.Bind(form).To(vm);
+
+            // act
+            BindingManager.For(form).Bind(tb, _ => _.Text).To(vm, _ => _.Text);
+
+            Assert.AreEqual(initialText, tb.Text);
+
+            vm.Text = newText;
+
+            // assert
+            Assert.AreEqual(newText, tb.Text);
+        }
+
 
         [TestMethod]
         public void BindingToViewModel_WithoutTwoWay_NoChange()

@@ -10,35 +10,12 @@ namespace WFbind
 
         internal BindingBuilder(TView view)
         {
-            if (view == null)
-            {
-                throw new ArgumentNullException(nameof(view));
-            }
-
-            View = view;
+           View = view;
         }
 
         public BindingBuilder<TView, TControl> Bind<TControl>(TControl control, Expression<Func<TControl, object>> viewProperty)
         {
             return new BindingBuilder<TView, TControl>(View, control, viewProperty);
-        }
-
-        internal override bool HasViewModel(INotifyPropertyChanged viewModel)
-        {
-            return false;
-        }
-
-        internal override void Unbind()
-        {
-        }
-
-        internal override void Update()
-        {
-        }
-
-        internal override bool IsAffectedBy(string propertyName)
-        {
-            return false;
         }
     }
 
@@ -63,25 +40,7 @@ namespace WFbind
             ViewProperty = viewProperty;
         }
 
-        public FinalBinding To<TViewModel>(TViewModel viewModel, Expression<Func<TViewModel, object>> viewModelProperty) where TViewModel : INotifyPropertyChanged
-        {
-            var binding = Build(View, Control, ViewProperty, viewModel, viewModelProperty);
-
-            BindingManager.AddBinding(binding);
-
-            return binding;
-        }
-    }
-
-    public class BindingBuilder<TView, TControl, TViewModel> : BindingBuilder<TView, TControl> where TViewModel : INotifyPropertyChanged
-    {
-        public Expression<Func<TViewModel, object>> ViewModelProperty { get; }
-
-        public TViewModel ViewModel { get; }
-
-        internal BindingBuilder(TView view, TControl control, Expression<Func<TControl, object>> viewProperty,
-            TViewModel viewModel,
-            Expression<Func<TViewModel, object>> viewModelProperty) : base(view, control, viewProperty)
+        public Binding To<TViewModel>(TViewModel viewModel, Expression<Func<TViewModel, object>> viewModelProperty) where TViewModel : INotifyPropertyChanged
         {
             if (viewModel == null)
             {
@@ -93,33 +52,11 @@ namespace WFbind
                 throw new ArgumentNullException(nameof(viewModelProperty));
             }
 
-            ViewModel = viewModel;
-            ViewModelProperty = viewModelProperty;
-        }
-        
-        internal sealed override bool IsAffectedBy(string bindingPropertyName)
-        {
-            var viewModel = BindingManager.GetViewModelFor<TViewModel>(View);
+            var binding = Build(View, Control, ViewProperty, viewModel, viewModelProperty);
 
-            var viewModelProperty = viewModel.GetPropertyInfo(ViewModelProperty);
+            BindingManager.AddBinding(binding);
 
-            return viewModelProperty.Name == bindingPropertyName;
-        }
-
-        internal sealed override void Update()
-        {
-            var viewModel = BindingManager.GetViewModelFor<TViewModel>(View);
-
-            var viewModelProperty = viewModel.GetPropertyInfo(ViewModelProperty);
-            var viewProperty = Control.GetPropertyInfo(ViewProperty);
-
-            var valueToSet = viewModelProperty.GetValue(viewModel);
-            viewProperty.SetValue(Control, valueToSet);
-        }
-
-        internal sealed override bool HasViewModel(INotifyPropertyChanged viewModel)
-        {
-            return ViewModel.Equals(viewModel);
+            return binding;
         }
     }
 }

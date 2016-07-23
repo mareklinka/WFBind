@@ -7,41 +7,17 @@ namespace WFbind
 {
     public abstract class AbstractBindingBuilder
     {
-        public static FinalBinding<TView> Build<TView, TControl, TViewModel>(TView view,
+        public static Binding<TView> Build<TView, TControl, TViewModel>(TView view,
             TControl control, Expression<Func<TControl, object>> viewProperty, TViewModel viewModel, Expression<Func<TViewModel, object>> viewModelProperty) where TViewModel : INotifyPropertyChanged
         {
-            if (typeof(TControl) == typeof(Label))
+            if (typeof(TControl) == typeof(TextBox) && control.GetPropertyInfo(viewProperty).Name == "Text")
             {
-                return new FinalBinding<TView>(new LabelBinding<TView, TViewModel>(view, control as Label,
-                    viewProperty as Expression<Func<Label, object>>, viewModel, viewModelProperty));
+                return new TextBoxBinding<TView, TViewModel>(view, control as TextBox,
+                    viewProperty as Expression<Func<TextBox, object>>, viewModel, viewModelProperty);
             }
 
-            if (typeof(TControl) == typeof(TextBox))
-            {
-                return new FinalBinding<TView>(new TextBoxBinding<TView, TViewModel>(view, control as TextBox,
-                    viewProperty as Expression<Func<TextBox, object>>, viewModel, viewModelProperty));
-            }
-
-            throw new NotImplementedException();
+            return new SimpleBinding<TView, TControl, TViewModel>(view, control,
+                viewProperty, viewModel, viewModelProperty);
         }
-
-        protected AbstractBindingBuilder()
-        {
-            Configuration = new BindingConfiguration();
-        }
-
-        internal BindingConfiguration Configuration { get; }
-
-        protected virtual void UpdateSource()
-        {
-        }
-
-        internal abstract bool HasViewModel(INotifyPropertyChanged viewModel);
-
-        internal abstract void Unbind();
-
-        internal abstract void Update();
-
-        internal abstract bool IsAffectedBy(string propertyName);
     }
 }

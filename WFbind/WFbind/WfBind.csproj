@@ -22,12 +22,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -45,9 +46,10 @@
     <Compile Include="BindingBuilder.cs" />
     <Compile Include="BindingConfiguration.cs" />
     <Compile Include="BindingManager.cs" />
+    <Compile Include="Exceptions\InvalidBindingException.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="FinalBinding.cs" />
-    <Compile Include="LabelBinding.cs" />
+    <Compile Include="Binding.cs" />
+    <Compile Include="SimpleBinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextBoxBinding.cs" />
     <Compile Include="TwoWayBinding.cs" />

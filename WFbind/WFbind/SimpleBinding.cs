@@ -1,14 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Windows.Forms;
 
 namespace WFbind
 {
-    internal class LabelBinding<TView, TViewModel> : BindingBuilder<TView, Label, TViewModel>
+    internal class SimpleBinding<TView, TControl, TViewModel> : Binding<TView, TControl, TViewModel>
         where TViewModel : INotifyPropertyChanged
     {
-        public LabelBinding(TView view, Label control, Expression<Func<Label, object>> viewProperty,
+        public SimpleBinding(TView view, TControl control, Expression<Func<TControl, object>> viewProperty,
             TViewModel viewModel,
             Expression<Func<TViewModel, object>> viewModelProperty)
             : base(view, control, viewProperty, viewModel, viewModelProperty)

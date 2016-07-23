@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Windows.Forms;
 using WFBind;
 
 namespace WFbind
@@ -20,9 +19,9 @@ namespace WFbind
             return new BindingBuilder<TView, TControl>(View, control, viewProperty);
         }
 
-        public CommandBindingBuilder<TView, Button> BindCommand(Button button)
+        public CommandBindingBuilder<TView, TButton> BindCommand<TButton>(TButton item)
         {
-            return new CommandBindingBuilder<TView, Button>(View, button);
+            return new CommandBindingBuilder<TView, TButton>(View, item);
         }
     }
 

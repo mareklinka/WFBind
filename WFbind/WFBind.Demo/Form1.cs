@@ -110,6 +110,11 @@ namespace WFBind.Demo
                 _vm.Text = "AA";
             }
 
+            public void RaiseCanExecuteChanged()
+            {
+                OnCanExecuteChanged();
+            }
+
             protected virtual void OnCanExecuteChanged()
             {
                 CanExecuteChanged?.Invoke(this, EventArgs.Empty);

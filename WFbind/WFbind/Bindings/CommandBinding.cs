@@ -6,20 +6,20 @@ using WFbind;
 
 namespace WFBind.Bindings
 {
-    internal abstract class CommandBinding<TView, TControl, TViewModel> : Binding<TView, TControl, TViewModel> where TViewModel : INotifyPropertyChanged
+    public abstract class CommandBinding<TView, TControl, TViewModel> : Binding<TView, TControl, TViewModel> where TViewModel : INotifyPropertyChanged
     {
         protected PropertyInfo ViewModelCommandPropertyInfo { get; private set; }
         protected Expression<Func<TViewModel, ICommand>> ViewModelCommandProperty { get; private set; }
 
-        internal override void UpdateView()
+        internal sealed override void UpdateView()
         {
         }
 
-        internal override void UpdateViewModel()
+        internal sealed override void UpdateViewModel()
         {
         }
 
-        internal override bool IsAffectedBy(INotifyPropertyChanged viewModel, string propertyName)
+        internal sealed override bool IsAffectedBy(INotifyPropertyChanged viewModel, string propertyName)
         {
             // commands do not react to viewmodel updates
             return false;
@@ -46,9 +46,7 @@ namespace WFBind.Bindings
             ToggleCommandState(GetCommand().CanExecute());
         }
 
-        protected virtual void ToggleCommandState(bool canExecute)
-        {
-        }
+        protected abstract void ToggleCommandState(bool canExecute);
 
         protected ICommand GetCommand()
         {

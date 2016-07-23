@@ -49,6 +49,9 @@
     <Compile Include="Bindings\ButtonCommandBinding.cs" />
     <Compile Include="Bindings\CheckBoxBinding.cs" />
     <Compile Include="Bindings\CommandBinding.cs" />
+    <Compile Include="Bindings\MenuItemCommandBinding.cs" />
+    <Compile Include="Bindings\ToolStripButtonCommandBinding.cs" />
+    <Compile Include="Bindings\ToolStripMenuItemCommandBinding.cs" />
     <Compile Include="Bindings\RadioBinding.cs" />
     <Compile Include="Exceptions\InvalidBindingException.cs" />
     <Compile Include="Extensions.cs" />

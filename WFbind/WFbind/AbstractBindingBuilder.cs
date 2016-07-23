@@ -37,8 +37,31 @@ namespace WFbind
         public static Binding<TView> BuildCommand<TView, TControl, TViewModel>(TView view,
             TControl control,  TViewModel viewModel, Expression<Func<TViewModel, ICommand>> viewModelProperty) where TViewModel : INotifyPropertyChanged
         {
-            return new ButtonCommandBinding<TView, TViewModel>(view, control as Button,
-                viewModel, viewModelProperty);
+            if (typeof(TControl) == typeof(Button))
+            {
+                return new ButtonCommandBinding<TView, TViewModel>(view, control as Button,
+                    viewModel, viewModelProperty);
+            }
+
+            if (typeof(TControl) == typeof(ToolStripMenuItem))
+            {
+                return new ToolStripMenuItemCommandBinding<TView, TViewModel>(view, control as ToolStripMenuItem, 
+                    viewModel, viewModelProperty);
+            }
+
+            if (typeof(TControl) == typeof(ToolStripButton))
+            {
+                return new ToolStripButtonCommandBinding<TView, TViewModel>(view, control as ToolStripButton,
+                    viewModel, viewModelProperty);
+            }
+
+            if (typeof(TControl) == typeof(MenuItem))
+            {
+                return new MenuItemCommandBinding<TView, TViewModel>(view, control as MenuItem,
+                    viewModel, viewModelProperty);
+            }
+
+            throw new NotSupportedException(string.Format("Command binding is not supported for {0}", typeof(TControl)));
         }
     }
 }

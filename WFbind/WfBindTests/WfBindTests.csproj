@@ -64,10 +64,15 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BindingManagerTests.cs" />
+    <Compile Include="Bindings\ButtonCommandBindingTests.cs" />
     <Compile Include="Bindings\CheckBoxBindingTests.cs" />
+    <Compile Include="Bindings\MenuItemCommandBindingTests.cs" />
     <Compile Include="Bindings\RadioBindingTests.cs" />
+    <Compile Include="Bindings\ToolStripButtonCommandBindingTests.cs" />
+    <Compile Include="Bindings\ToolStripMenuItemCommandBindingTests.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Bindings\SimpleBindingTests.cs" />
+    <Compile Include="ITestingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestingViewModel.cs" />
     <Compile Include="TextBoxBindingTests.cs" />

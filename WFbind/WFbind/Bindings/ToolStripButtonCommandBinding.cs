@@ -5,10 +5,10 @@ using System.Windows.Forms;
 
 namespace WFBind.Bindings
 {
-    public class ButtonCommandBinding<TView, TViewModel> : CommandBinding<TView, Button, TViewModel>
+    public class ToolStripButtonCommandBinding<TView, TViewModel> : CommandBinding<TView, ToolStripButton, TViewModel>
         where TViewModel : INotifyPropertyChanged
     {
-        public ButtonCommandBinding(TView view, Button control,
+        public ToolStripButtonCommandBinding(TView view, ToolStripButton control,
             TViewModel viewModel,
             Expression<Func<TViewModel, ICommand>> viewModelProperty)
             : base(view, control, viewModel, viewModelProperty)
@@ -17,10 +17,10 @@ namespace WFBind.Bindings
             ToggleCommandState(GetCommand().CanExecute());
         }
 
-        private void HookEvents(Button control)
+        private void HookEvents(ToolStripButton control)
         {
             control.Click += ControlOnClick;
-            
+
         }
 
         protected override void ToggleCommandState(bool canExecute)
@@ -44,7 +44,7 @@ namespace WFBind.Bindings
             base.Unbind();
         }
 
-        private void UnhookEvents(Button control)
+        private void UnhookEvents(ToolStripButton control)
         {
             control.Click -= ControlOnClick;
             var command = GetCommand();

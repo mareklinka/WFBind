@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WFBind.Exceptions
 {
+    [ExcludeFromCodeCoverage]
     public class InvalidBindingException : Exception
     {
         public InvalidBindingException()

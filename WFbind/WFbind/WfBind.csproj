@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractBindingBuilder.cs" />
+    <Compile Include="BindingFactory.cs" />
     <Compile Include="BindingBuilder.cs" />
     <Compile Include="BindingConfiguration.cs" />
     <Compile Include="BindingManager.cs" />
@@ -53,6 +53,7 @@
     <Compile Include="Bindings\ToolStripButtonCommandBinding.cs" />
     <Compile Include="Bindings\ToolStripMenuItemCommandBinding.cs" />
     <Compile Include="Bindings\RadioBinding.cs" />
+    <Compile Include="CommandBindingBuilder.cs" />
     <Compile Include="Exceptions\InvalidBindingException.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Binding.cs" />

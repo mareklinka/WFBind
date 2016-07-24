@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WFBind.Bindings
 {
-    public class ToolStripMenuItemCommandBinding<TView, TViewModel> : CommandBinding<TView, ToolStripMenuItem, TViewModel>
+    internal class ToolStripMenuItemCommandBinding<TView, TViewModel> : CommandBinding<TView, ToolStripMenuItem, TViewModel>
         where TViewModel : INotifyPropertyChanged
     {
         public ToolStripMenuItemCommandBinding(TView view, ToolStripMenuItem control,

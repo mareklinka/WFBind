@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WFBind.Bindings
 {
-    public class ToolStripButtonCommandBinding<TView, TViewModel> : CommandBinding<TView, ToolStripButton, TViewModel>
+    internal class ToolStripButtonCommandBinding<TView, TViewModel> : CommandBinding<TView, ToolStripButton, TViewModel>
         where TViewModel : INotifyPropertyChanged
     {
         public ToolStripButtonCommandBinding(TView view, ToolStripButton control,

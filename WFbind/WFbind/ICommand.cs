@@ -2,6 +2,9 @@
 
 namespace WFBind
 {
+    /// <summary>
+    /// Command interface.
+    /// </summary>
     public interface ICommand
     {
         /// <summary>Occurs when changes occur that affect whether or not the command should execute.</summary>
@@ -14,6 +17,9 @@ namespace WFBind
         /// <summary>Defines the method to be called when the command is invoked.</summary>
         void Execute();
 
+        /// <summary>
+        /// Raises the CanExecuteChanged event.
+        /// </summary>
         void RaiseCanExecuteChanged();
     }
 }

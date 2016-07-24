@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WFBind.Bindings
 {
-    public class MenuItemCommandBinding<TView, TViewModel> : CommandBinding<TView, MenuItem, TViewModel>
+    internal class MenuItemCommandBinding<TView, TViewModel> : CommandBinding<TView, MenuItem, TViewModel>
         where TViewModel : INotifyPropertyChanged
     {
         public MenuItemCommandBinding(TView view, MenuItem control,

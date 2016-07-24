@@ -7,11 +7,27 @@ using WFBind.Bindings;
 
 namespace WFbind
 {
-    public abstract class AbstractBindingBuilder
+    /// <summary>
+    /// Binding factory.
+    /// </summary>
+    public static class BindingFactory
     {
-        public static Binding<TView> Build<TView, TControl, TViewModel>(TView view,
+        /// <summary>
+        /// Builds a new binding.
+        /// </summary>
+        /// <typeparam name="TView">The type of the view the new binding binds to.</typeparam>
+        /// <typeparam name="TControl">The type of the control the new binding binds to.</typeparam>
+        /// <typeparam name="TViewModel">The type of the viewmodel the new binding binds to.</typeparam>
+        /// <param name="view">The view to bind to.</param>
+        /// <param name="control">The control to bind to.</param>
+        /// <param name="viewProperty">The binding target property (the property on the control to bind to).</param>
+        /// <param name="viewModel">The viewmodel to bind to.</param>
+        /// <param name="viewModelProperty">The binding source property (the property on the viewmodel to bind to).</param>
+        /// <returns>A new binding.</returns>
+        internal static Binding<TView> Build<TView, TControl, TViewModel>(TView view,
             TControl control, Expression<Func<TControl, object>> viewProperty, TViewModel viewModel, Expression<Func<TViewModel, object>> viewModelProperty) where TViewModel : INotifyPropertyChanged
         {
+            // special cases are handled by type and property name
             if (typeof(TControl) == typeof(TextBox) && control.GetPropertyInfo(viewProperty).Name == "Text")
             {
                 return new TextBoxBinding<TView, TViewModel>(view, control as TextBox,
@@ -30,13 +46,27 @@ namespace WFbind
                     viewProperty as Expression<Func<RadioButton, object>>, viewModel, viewModelProperty);
             }
 
+            // generic one-way binding
             return new SimpleBinding<TView, TControl, TViewModel>(view, control,
                 viewProperty, viewModel, viewModelProperty);
         }
 
-        public static Binding<TView> BuildCommand<TView, TControl, TViewModel>(TView view,
+        /// <summary>
+        /// Builds a new command binding.
+        /// </summary>
+        /// <typeparam name="TView">The type of the view the new binding binds to.</typeparam>
+        /// <typeparam name="TControl">The type of the control the new binding binds to.</typeparam>
+        /// <typeparam name="TViewModel">The type of the viewmodel the new binding binds to.</typeparam>
+        /// <param name="view">The view to bind to.</param>
+        /// <param name="control">The control to bind to.</param>
+        /// <param name="viewModel">The viewmodel to bind to.</param>
+        /// <param name="viewModelProperty">The binding source property (the property on the viewmodel to bind to).</param>
+        /// <exception cref="NotSupportedException">Thrown when an unsupported control is encountered.</exception>
+        /// <returns>A new command binding.</returns>
+        internal static Binding<TView> BuildCommand<TView, TControl, TViewModel>(TView view,
             TControl control,  TViewModel viewModel, Expression<Func<TViewModel, ICommand>> viewModelProperty) where TViewModel : INotifyPropertyChanged
         {
+            // type of command binding is derived from the type of control
             if (typeof(TControl) == typeof(Button))
             {
                 return new ButtonCommandBinding<TView, TViewModel>(view, control as Button,
@@ -61,6 +91,7 @@ namespace WFbind
                     viewModel, viewModelProperty);
             }
 
+            // unsupported control type
             throw new NotSupportedException(string.Format("Command binding is not supported for {0}", typeof(TControl)));
         }
     }

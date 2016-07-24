@@ -15,7 +15,7 @@ namespace WFBind.Demo
         public void Bind(MyViewModel viewModel)
         {
             _viewModel = viewModel;
-            this.Bind().To(_viewModel);
+            BindingManager.Bind(this).To(_viewModel);
             BindingManager.For(this)
                 .Bind(label1, _ => _.Text)
                 .To(_viewModel, vm => vm.Text);

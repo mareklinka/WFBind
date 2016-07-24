@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WFBind.Bindings
 {
-    public class ButtonCommandBinding<TView, TViewModel> : CommandBinding<TView, Button, TViewModel>
+    internal class ButtonCommandBinding<TView, TViewModel> : CommandBinding<TView, Button, TViewModel>
         where TViewModel : INotifyPropertyChanged
     {
         public ButtonCommandBinding(TView view, Button control,

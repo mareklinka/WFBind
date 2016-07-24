@@ -7,7 +7,7 @@ using WFBind.Exceptions;
 
 namespace WFBind.Bindings
 {
-    public class RadioBinding<TView, TViewModel> : TwoWayBinding<TView, RadioButton, TViewModel>
+    internal class RadioBinding<TView, TViewModel> : TwoWayBinding<TView, RadioButton, TViewModel>
         where TViewModel : INotifyPropertyChanged
     {
         public RadioBinding(TView view, RadioButton control, Expression<Func<RadioButton, object>> viewProperty,
@@ -33,7 +33,7 @@ namespace WFBind.Bindings
             UpdateViewModel();
         }
 
-        internal override void UpdateViewModel()
+        protected override void UpdateViewModel()
         {
             if (Configuration.IsTwoWay)
             {

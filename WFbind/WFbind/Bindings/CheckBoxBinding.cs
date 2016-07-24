@@ -7,7 +7,7 @@ using WFBind.Exceptions;
 
 namespace WFBind.Bindings
 {
-    public class CheckBoxBinding<TView, TViewModel> : TwoWayBinding<TView, CheckBox, TViewModel>
+    internal class CheckBoxBinding<TView, TViewModel> : TwoWayBinding<TView, CheckBox, TViewModel>
         where TViewModel : INotifyPropertyChanged
     {
         public CheckBoxBinding(TView view, CheckBox control, Expression<Func<CheckBox, object>> viewProperty,
@@ -33,7 +33,7 @@ namespace WFBind.Bindings
             UpdateViewModel();
         }
 
-        internal override void UpdateViewModel()
+        protected override void UpdateViewModel()
         {
             if (Configuration.IsTwoWay)
             {

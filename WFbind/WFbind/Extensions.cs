@@ -1,15 +1,25 @@
 using System;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Windows.Forms;
 
 namespace WFbind
 {
+    /// <summary>
+    /// Extension methods.
+    /// </summary>
     [ExcludeFromCodeCoverage]
     public static class Extensions
     {
+        /// <summary>
+        /// Gets property info from an expression.
+        /// </summary>
+        /// <typeparam name="TSource">Type of source object.</typeparam>
+        /// <typeparam name="TProperty">Type of property.</typeparam>
+        /// <param name="source">The source object containing the property.</param>
+        /// <param name="propertyLambda">The expression specifying a property on the source object.</param>
+        /// <exception cref="ArgumentException">Thrown when a property name cannot be extracted from the provided expression.</exception>
+        /// <returns>Property info.</returns>
         internal static PropertyInfo GetPropertyInfo<TSource, TProperty>(
             this TSource source,
             Expression<Func<TSource, TProperty>> propertyLambda)
@@ -43,46 +53,16 @@ namespace WFbind
             if (propInfo == null)
                 throw new ArgumentException(string.Format(
                     "Expression '{0}' refers to a field, not a property.",
-                    propertyLambda.ToString()));
+                    propertyLambda));
 
             if (type != propInfo.ReflectedType &&
                 !type.IsSubclassOf(propInfo.ReflectedType))
                 throw new ArgumentException(string.Format(
                     "Expresion '{0}' refers to a property that is not from type {1}.",
-                    propertyLambda.ToString(),
+                    propertyLambda,
                     type));
 
             return propInfo;
-        }
-
-        public static ViewModelConfiguration<Form> Bind(this Form form)
-        {
-            return BindingManager.Bind(form);
-        }
-
-        public static ViewModelConfiguration<UserControl> Bind(this UserControl form)
-        {
-            return BindingManager.Bind(form);
-        }
-
-        public static INotifyPropertyChanged DataContext(this UserControl form)
-        {
-            return BindingManager.GetViewModelFor<INotifyPropertyChanged>(form);
-        }
-
-        public static INotifyPropertyChanged DataContext(this Form form)
-        {
-            return BindingManager.GetViewModelFor<INotifyPropertyChanged>(form);
-        }
-
-        public static TViewModel DataContext<TViewModel>(this UserControl form) where TViewModel : INotifyPropertyChanged
-        {
-            return BindingManager.GetViewModelFor<TViewModel>(form);
-        }
-
-        public static TViewModel DataContext<TViewModel>(this Form form) where TViewModel : INotifyPropertyChanged
-        {
-            return BindingManager.GetViewModelFor<TViewModel>(form);
         }
     }
 }

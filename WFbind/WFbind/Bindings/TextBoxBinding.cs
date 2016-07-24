@@ -7,7 +7,7 @@ using WFBind.Exceptions;
 
 namespace WFBind.Bindings
 {
-    public class TextBoxBinding<TView, TViewModel> : TwoWayBinding<TView, TextBox, TViewModel>
+    internal class TextBoxBinding<TView, TViewModel> : TwoWayBinding<TView, TextBox, TViewModel>
         where TViewModel : INotifyPropertyChanged
     {
         public TextBoxBinding(TView view, TextBox control, Expression<Func<TextBox, object>> viewProperty,
@@ -37,7 +37,7 @@ namespace WFBind.Bindings
             }
         }
 
-        internal override void UpdateViewModel()
+        protected override void UpdateViewModel()
         {
             if (Configuration.IsTwoWay)
             {

@@ -6,7 +6,7 @@ using WFbind;
 
 namespace WFBind.Bindings
 {
-    public abstract class CommandBinding<TView, TControl, TViewModel> : Binding<TView, TControl, TViewModel> where TViewModel : INotifyPropertyChanged
+    internal abstract class CommandBinding<TView, TControl, TViewModel> : Binding<TView, TControl, TViewModel> where TViewModel : INotifyPropertyChanged
     {
         protected PropertyInfo ViewModelCommandPropertyInfo { get; private set; }
         protected Expression<Func<TViewModel, ICommand>> ViewModelCommandProperty { get; private set; }
@@ -15,7 +15,7 @@ namespace WFBind.Bindings
         {
         }
 
-        internal sealed override void UpdateViewModel()
+        protected sealed override void UpdateViewModel()
         {
         }
 

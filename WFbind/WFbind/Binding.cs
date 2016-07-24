@@ -64,6 +64,20 @@ namespace WFbind
         /// <param name="view">The view to check.</param>
         /// <returns>Ture if this binding binds to the specified view, otherwise false.</returns>
         internal abstract bool HasView(object view);
+
+        /// <summary>
+        /// Unhooks all previously hooked events.
+        /// </summary>
+        protected virtual void UnhookEvents()
+        {
+        }
+
+        /// <summary>
+        /// Hooks the events necessary for this binding.
+        /// </summary>
+        protected internal virtual void HookEvents()
+        {
+        }
     }
 
     /// <summary>

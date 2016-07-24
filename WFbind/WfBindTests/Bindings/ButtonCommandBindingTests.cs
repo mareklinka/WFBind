@@ -42,7 +42,6 @@ namespace WfBindTests.Bindings
         public void Unbind_Unhooks()
         {
             var vmMock = new Mock<ITestingViewModel>();
-            vmMock.SetupProperty(_ => _.WasCommandCalled);
 
             var commandMock = new Mock<ICommand>();
             commandMock.Setup(_ => _.Execute()).Callback(() => vmMock.Object.WasCommandCalled = true);
@@ -56,19 +55,16 @@ namespace WfBindTests.Bindings
             form.Controls.Add(control);
 
             BindingManager.Bind(form).To(vmMock.Object);
-
             BindingManager.For(form).BindCommand(control).To(vmMock.Object, _ => _.Command);
             control.FireEvent("Click", EventArgs.Empty);
 
             var vmMock2 = new Mock<ITestingViewModel>();
-            vmMock2.SetupProperty(_ => _.WasCommandCalled);
 
             var commandMock2 = new Mock<ICommand>();
             commandMock2.Setup(_ => _.Execute()).Callback(() => vmMock2.Object.WasCommandCalled = true);
             commandMock2.Setup(_ => _.CanExecute()).Returns(true);
 
             BindingManager.Bind(form).To(vmMock2.Object);
-
             control.FireEvent("Click", EventArgs.Empty);
 
             vmMock.VerifySet(_ => _.WasCommandCalled = true, Times.Once);

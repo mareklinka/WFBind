@@ -27,23 +27,31 @@ namespace WFbind
         internal static Binding<TView> Build<TView, TControl, TViewModel>(TView view,
             TControl control, Expression<Func<TControl, object>> viewProperty, TViewModel viewModel, Expression<Func<TViewModel, object>> viewModelProperty) where TViewModel : INotifyPropertyChanged
         {
+            Binding<TView> result = null;
+
             // special cases are handled by type and property name
             if (typeof(TControl) == typeof(TextBox) && control.GetPropertyInfo(viewProperty).Name == "Text")
             {
-                return new TextBoxBinding<TView, TViewModel>(view, control as TextBox,
+                result = new TextBoxBinding<TView, TViewModel>(view, control as TextBox,
                     viewProperty as Expression<Func<TextBox, object>>, viewModel, viewModelProperty);
             }
 
             if (typeof(TControl) == typeof(CheckBox) && control.GetPropertyInfo(viewProperty).Name == "Checked")
             {
-                return new CheckBoxBinding<TView, TViewModel>(view, control as CheckBox, 
+                result = new CheckBoxBinding<TView, TViewModel>(view, control as CheckBox, 
                     viewProperty as Expression<Func<CheckBox, object>>, viewModel, viewModelProperty);
             }
 
             if (typeof(TControl) == typeof(RadioButton) && control.GetPropertyInfo(viewProperty).Name == "Checked")
             {
-                return new RadioBinding<TView, TViewModel>(view, control as RadioButton,
+                result = new RadioBinding<TView, TViewModel>(view, control as RadioButton,
                     viewProperty as Expression<Func<RadioButton, object>>, viewModel, viewModelProperty);
+            }
+
+            if (result != null)
+            {
+                result.HookEvents();
+                return result;
             }
 
             // generic one-way binding
@@ -66,29 +74,37 @@ namespace WFbind
         internal static Binding<TView> BuildCommand<TView, TControl, TViewModel>(TView view,
             TControl control,  TViewModel viewModel, Expression<Func<TViewModel, ICommand>> viewModelProperty) where TViewModel : INotifyPropertyChanged
         {
+            Binding<TView> result = null;
+
             // type of command binding is derived from the type of control
             if (typeof(TControl) == typeof(Button))
             {
-                return new ButtonCommandBinding<TView, TViewModel>(view, control as Button,
+                result = new ButtonCommandBinding<TView, TViewModel>(view, control as Button,
                     viewModel, viewModelProperty);
             }
 
             if (typeof(TControl) == typeof(ToolStripMenuItem))
             {
-                return new ToolStripMenuItemCommandBinding<TView, TViewModel>(view, control as ToolStripMenuItem, 
+                result = new ToolStripMenuItemCommandBinding<TView, TViewModel>(view, control as ToolStripMenuItem, 
                     viewModel, viewModelProperty);
             }
 
             if (typeof(TControl) == typeof(ToolStripButton))
             {
-                return new ToolStripButtonCommandBinding<TView, TViewModel>(view, control as ToolStripButton,
+                result = new ToolStripButtonCommandBinding<TView, TViewModel>(view, control as ToolStripButton,
                     viewModel, viewModelProperty);
             }
 
             if (typeof(TControl) == typeof(MenuItem))
             {
-                return new MenuItemCommandBinding<TView, TViewModel>(view, control as MenuItem,
+                result = new MenuItemCommandBinding<TView, TViewModel>(view, control as MenuItem,
                     viewModel, viewModelProperty);
+            }
+
+            if (result != null)
+            {
+                result.HookEvents();
+                return result;
             }
 
             // unsupported control type

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WfBindTests;
+using WFbind;
+using WFbind.Tests;
 
-namespace WFbind.Tests
+namespace WfBindTests
 {
     [TestClass]
     public class TextBoxBindingTests
